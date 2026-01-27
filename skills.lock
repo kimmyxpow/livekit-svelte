@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "skills": {
+    "skill:svelte-code-writer": {
+      "url": "https://github.com/sveltejs/mcp.git",
+      "subpath": "plugins/svelte/skills",
+      "branch": "main",
+      "commit": "8518e627d3853fa64fd2bcd326d4620cee140222"
+    }
+  }
+}
