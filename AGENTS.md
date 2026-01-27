@@ -1,4 +1,5 @@
 Use Bun instead of npm, pnpm, or yarn.
+Always run bun check, bun lint, bun format when making any changes.
 
 You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
 
