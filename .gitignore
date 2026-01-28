@@ -1,5 +1,7 @@
 node_modules
 reference-only
+@reference-only
+settings.local.json
 
 # Output
 .output
