@@ -1,65 +1,110 @@
-# Svelte library
+# LiveKit Svelte (Unofficial)
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+An **unofficial** Svelte 5-native wrapper for [LiveKit](https://livekit.io), providing reactive components and hooks for building real-time video and audio applications.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+> **Note**: This is a community-driven library and is not officially maintained by LiveKit.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+bun add livekit-svelte livekit-client
 ```
 
-To recreate this project with the same configuration:
+## Quick Start
 
-```sh
-# recreate this project
-bun x sv create --template library --types ts --add mcp="ide:claude-code,opencode+setup:remote" --install bun livekit-svelte
+```svelte
+<script>
+	import { LiveKitRoom, VideoConference } from 'livekit-svelte';
+
+	const serverUrl = 'wss://your-livekit-server.com';
+	const token = 'your-access-token';
+</script>
+
+<LiveKitRoom {serverUrl} {token} audio video>
+	<VideoConference />
+</LiveKitRoom>
 ```
 
-## Developing
+## Features
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **Svelte 5** - Built with runes ($state, $derived, $effect) for optimal reactivity
+- **LiveKit Components Core** - Powered by `@livekit/components-core` for consistent behavior
+- **TypeScript** - Full type safety with TypeScript support
+- **Modular** - Import only what you need
 
-```sh
-npm run dev
+## Components
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Room Components
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+- `LiveKitRoom` - Room provider and connection manager
+- `VideoConference` - Complete video conferencing UI
+- `AudioConference` - Audio-only conferencing UI
+- `RoomAudioRenderer` - Renders all room audio tracks
 
-## Building
+### Participant Components
 
-To build your library:
+- `ParticipantTile` - Video tile for a participant
+- `ParticipantAudioTile` - Audio-only tile for a participant
+- `ParticipantName` - Display participant name
+- `ConnectionQualityIndicator` - Show connection quality
+- `VideoTrack` - Render video track
+- `AudioTrack` - Render audio track
+- `TrackMutedIndicator` - Show muted state indicator
 
-```sh
-npm pack
-```
+### Layout Components
 
-To create a production version of your showcase app:
+- `GridLayout` - Grid layout for multiple participants
+- `FocusLayout` - Focus layout for pinned track
+- `CarouselLayout` - Carousel layout for tracks
+- `LayoutContextProvider` - Layout context provider
 
-```sh
-npm run build
-```
+### Controls
 
-You can preview the production build with `npm run preview`.
+- `TrackToggle` - Toggle camera/microphone/screen share
+- `DisconnectButton` - Disconnect from room
+- `ChatToggle` - Toggle chat visibility
+- `FocusToggle` - Pin/unpin track
+- `MediaDeviceSelect` - Select audio/video devices
+- `ClearPinButton` - Clear all pinned tracks
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+### Chat
 
-## Publishing
+- `Chat` - Chat component
+- `ChatEntry` - Individual chat message
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+## Hooks
 
-To publish your library to [npm](https://www.npmjs.com):
+### Room Hooks
 
-```sh
-npm publish
-```
+- `useLiveKitRoom` - Access and control room connection
+- `useConnectionState` - Track connection state
+- `useRoomInfo` - Get room metadata
+
+### Participant Hooks
+
+- `useParticipants` - Get all participants
+- `useRemoteParticipants` - Get remote participants only
+- `useLocalParticipant` - Get local participant
+- `useParticipantInfo` - Get participant info
+- `useConnectionQuality` - Track connection quality
+- `useIsSpeaking` - Track speaking state
+
+### Track Hooks
+
+- `useTracks` - Get tracks by source
+- `useTrackToggle` - Toggle track publication
+- `useTrackMutedIndicator` - Track muted state
+- `usePinnedTracks` - Get pinned tracks
+
+### Device Hooks
+
+- `useMediaDevices` - List available media devices
+- `useMediaDeviceSelect` - Select active device
+
+### Chat Hooks
+
+- `useChat` - Send and receive chat messages
+
+## License
+
+MIT
