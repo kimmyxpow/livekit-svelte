@@ -1,38 +1,44 @@
 import { getContext, setContext } from 'svelte';
-import { writable, type Writable } from 'svelte/store';
 import { SESSION_CONTEXT_KEY } from './keys.js';
+import type { UseSessionReturn } from '../hooks/use-session.svelte.js';
 
-export interface AgentState {
-	name: string;
-	state: 'connecting' | 'connected' | 'disconnected';
+/**
+ * @beta
+ */
+export type SessionContextValue = UseSessionReturn;
+
+/**
+ * @beta
+ */
+export function createSessionContext(session: UseSessionReturn): SessionContextValue {
+	return session;
 }
 
-export interface SessionContextValue {
-	agent: Writable<AgentState | undefined>;
-	isAgentConnected: Writable<boolean>;
-}
-
-export function createSessionContext(): SessionContextValue {
-	return {
-		agent: writable<AgentState | undefined>(undefined),
-		isAgentConnected: writable<boolean>(false)
-	};
-}
-
+/**
+ * Sets the session context.
+ * @beta
+ */
 export function setSessionContext(context: SessionContextValue): void {
 	setContext(SESSION_CONTEXT_KEY, context);
 }
 
+/**
+ * Gets the session context if it exists.
+ * @beta
+ */
 export function getSessionContext(): SessionContextValue | undefined {
 	return getContext<SessionContextValue>(SESSION_CONTEXT_KEY);
 }
 
+/**
+ * Ensures that a session is provided via context.
+ * If no session is provided, an error is thrown.
+ * @beta
+ */
 export function ensureSessionContext(): SessionContextValue {
 	const ctx = getSessionContext();
 	if (!ctx) {
-		throw new Error(
-			'No session context found. Make sure the component is inside a SessionProvider component.'
-		);
+		throw Error('tried to access session context outside of SessionProvider component');
 	}
 	return ctx;
 }
