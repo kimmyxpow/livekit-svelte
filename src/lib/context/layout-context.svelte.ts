@@ -102,3 +102,7 @@ export function ensureLayoutContext(): LayoutContext {
 	}
 	return ctx;
 }
+
+export function useMaybeLayoutContext(): LayoutContext | undefined {
+	return getLayoutContext();
+}

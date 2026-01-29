@@ -19,3 +19,7 @@ export function ensureRoom(room?: Room): Room {
 	}
 	return r;
 }
+
+export function useMaybeRoomContext(): Room | undefined {
+	return getRoomContext();
+}

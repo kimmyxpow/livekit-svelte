@@ -7,8 +7,8 @@
 	import { ensureParticipant } from '../../context/participant-context.svelte.js';
 	import VideoTrack from './video-track.svelte';
 	import AudioTrack from './audio-track.svelte';
-	import ParticipantName from '../participant-name.svelte';
-	import ConnectionQualityIndicator from '../connection-quality-indicator.svelte';
+	import ParticipantName from './participant-name.svelte';
+	import ConnectionQualityIndicator from './connection-quality-indicator.svelte';
 	import TrackMutedIndicator from './track-muted-indicator.svelte';
 
 	interface Props {

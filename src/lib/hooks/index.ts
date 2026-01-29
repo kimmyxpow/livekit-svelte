@@ -147,6 +147,11 @@ export {
 export { useVoiceAssistant, type VoiceAssistant } from './use-voice-assistant.svelte.js';
 export { useTrackRefBySourceOrName } from './use-track-ref-by-source-or-name.svelte.js';
 export { useSettingsToggle, type UseSettingsToggleProps } from './use-settings-toggle.svelte.js';
+export {
+	useMediaTrackBySourceOrName,
+	type UseMediaTrackBySourceOrNameOptions,
+	type UseMediaTrackBySourceOrNameReturn
+} from './use-media-track-by-source-or-name.svelte.js';
 
 // Cloud/Krisp exports
 export {

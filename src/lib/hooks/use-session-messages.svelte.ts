@@ -52,7 +52,7 @@ export function useSessionMessages(session?: UseSessionReturn): UseSessionMessag
 	const agent = useAgent(session);
 
 	const transcriptions: Array<TextStreamData> = useTranscriptions({ room });
-	const chat = useChat(() => room);
+	const chat = useChat({ room });
 
 	const transcriptionMessages: Array<
 		ReceivedUserTranscriptionMessage | ReceivedAgentTranscriptionMessage
@@ -95,7 +95,7 @@ export function useSessionMessages(session?: UseSessionReturn): UseSessionMessag
 		})
 	);
 
-	const receivedMessages = $derived([...transcriptionMessages, ...chat.messages]);
+	const receivedMessages = $derived([...transcriptionMessages, ...chat.chatMessages]);
 
 	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const messageFirstReceivedTimeMap = new Map<ReceivedMessage['id'], Date>();

@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import type { TrackReference, TrackReferenceOrPlaceholder } from '@livekit/components-core';
+import type { TrackReferenceOrPlaceholder } from '@livekit/components-core';
 import { TRACK_REF_CONTEXT_KEY } from './keys.js';
 
 export function setTrackRefContext(trackRef: TrackReferenceOrPlaceholder): void {
@@ -22,8 +22,15 @@ export function ensureTrackRef(
 	return tr;
 }
 
-export function isTrackReference(
-	trackRef: TrackReferenceOrPlaceholder
-): trackRef is TrackReference {
-	return 'publication' in trackRef && trackRef.publication !== undefined;
+// Re-export from @livekit/components-core for convenience
+export { isTrackReference } from '@livekit/components-core';
+
+export function useMaybeTrackRefContext(): TrackReferenceOrPlaceholder | undefined {
+	return getTrackRefContext();
+}
+
+export function useEnsureTrackRef(
+	trackRef?: TrackReferenceOrPlaceholder
+): TrackReferenceOrPlaceholder {
+	return ensureTrackRef(trackRef);
 }

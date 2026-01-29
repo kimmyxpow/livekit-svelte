@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Participant } from 'livekit-client';
-	import { useParticipantInfo } from '../hooks/use-participant-info.svelte.js';
+	import { useParticipantInfo } from '../../hooks/use-participant-info.svelte.js';
 
 	interface Props {
 		participant?: Participant;

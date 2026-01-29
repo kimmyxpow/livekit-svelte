@@ -5,6 +5,7 @@ settings.local.json
 
 # Output
 .output
+.ralphy
 .vercel
 .netlify
 .wrangler

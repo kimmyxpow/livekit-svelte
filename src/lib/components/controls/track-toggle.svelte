@@ -1,26 +1,39 @@
 <script lang="ts">
-	import { Track } from 'livekit-client';
+	import type { ToggleSource } from '@livekit/components-core';
 	import type { Snippet } from 'svelte';
 	import { useTrackToggle } from '../../hooks/use-track-toggle.svelte.js';
 
-	interface Props {
-		source: Track.Source;
+	interface Props<T extends ToggleSource> {
+		source: T;
+		showIcon?: boolean;
+		initialState?: boolean;
 		class?: string;
 		children?: Snippet<[enabled: boolean, pending: boolean]>;
 	}
 
-	let { source, class: className = '', children }: Props = $props();
+	let {
+		source,
+		showIcon: _showIcon = true,
+		initialState,
+		class: className = '',
+		children
+	}: Props<ToggleSource> = $props();
 
-	const { enabled, toggle, pending } = useTrackToggle(() => ({ source }));
+	const { enabled, toggle, pending, buttonProps } = useTrackToggle(() => ({
+		source,
+		initialState
+	}));
 </script>
 
 <button
-	class="lk-track-toggle {className}"
+	class="lk-track-toggle {buttonProps.className} {className}"
 	class:lk-enabled={enabled}
 	class:lk-pending={pending}
-	onclick={toggle}
-	disabled={pending}
-	aria-pressed={enabled}
+	data-lk-source={buttonProps['data-lk-source']}
+	data-lk-enabled={buttonProps['data-lk-enabled']}
+	onclick={() => toggle()}
+	disabled={buttonProps.disabled}
+	aria-pressed={buttonProps['aria-pressed']}
 >
 	{#if children}
 		{@render children(enabled, pending)}

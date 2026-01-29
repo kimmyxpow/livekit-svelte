@@ -1,30 +1,30 @@
-import { setupChat, type ReceivedChatMessage } from '@livekit/components-core';
+import { setupChat, type ChatOptions, type ReceivedChatMessage } from '@livekit/components-core';
 import type { Room } from 'livekit-client';
 import { writable, type Writable } from 'svelte/store';
 import { useObservableState } from './internal/observable-state.svelte.js';
 import { ensureRoom } from '../context/room-context.svelte.js';
 
 export interface ChatState {
-	messages: ReceivedChatMessage[];
+	chatMessages: ReceivedChatMessage[];
 	isSending: boolean;
 }
 
 export interface UseChatReturn {
-	messages: ReceivedChatMessage[];
+	chatMessages: ReceivedChatMessage[];
 	isSending: boolean;
 	send: (message: string) => Promise<ReceivedChatMessage>;
 }
 
-export function useChat(room?: Room | (() => Room | undefined)): UseChatReturn {
-	const r = $derived(ensureRoom(typeof room === 'function' ? room() : room));
-	const { messageObservable, isSendingObservable, send } = $derived(setupChat(r));
+export function useChat(options?: ChatOptions & { room?: Room }): UseChatReturn {
+	const r = $derived(ensureRoom(options?.room));
+	const { messageObservable, isSendingObservable, send } = $derived(setupChat(r, options));
 
-	const messages = useObservableState(messageObservable, []);
+	const chatMessages = useObservableState(messageObservable, []);
 	const isSending = useObservableState(isSendingObservable, false);
 
 	return {
-		get messages() {
-			return messages;
+		get chatMessages() {
+			return chatMessages;
 		},
 		get isSending() {
 			return isSending;

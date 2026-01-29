@@ -2,8 +2,8 @@
 	import type { Participant } from 'livekit-client';
 	import type { Snippet } from 'svelte';
 	import { ensureParticipant } from '../../context/participant-context.svelte.js';
-	import ParticipantName from '../participant-name.svelte';
-	import ConnectionQualityIndicator from '../connection-quality-indicator.svelte';
+	import ParticipantName from './participant-name.svelte';
+	import ConnectionQualityIndicator from './connection-quality-indicator.svelte';
 
 	interface Props {
 		participant?: Participant;

@@ -7,7 +7,6 @@ export { default as ConnectionStateToast } from './connection-state-toast.svelte
 export { default as RoomName } from './room-name.svelte';
 export { default as Toast } from './toast.svelte';
 export { default as ChatEntry } from './chat-entry.svelte';
-export { default as Chat } from './chat.svelte';
 export { default as SessionProvider } from './session-provider.svelte';
 
 export { default as TrackToggle } from './controls/track-toggle.svelte';
@@ -31,6 +30,9 @@ export { default as ParticipantTile } from './participant/participant-tile.svelt
 export { default as ParticipantAudioTile } from './participant/participant-audio-tile.svelte';
 export { default as VideoTrack } from './participant/video-track.svelte';
 export { default as AudioTrack } from './participant/audio-track.svelte';
-export { default as ConnectionQualityIndicator } from './connection-quality-indicator.svelte';
-export { default as ParticipantName } from './participant-name.svelte';
+export { default as ConnectionQualityIndicator } from './participant/connection-quality-indicator.svelte';
+export { default as ParticipantName } from './participant/participant-name.svelte';
 export { default as TrackMutedIndicator } from './participant/track-muted-indicator.svelte';
+export { default as AudioVisualizer } from './participant/audio-visualizer.svelte';
+export { default as BarVisualizer } from './participant/bar-visualizer.svelte';
+export { default as SettingsMenuToggle } from './controls/settings-menu-toggle.svelte';

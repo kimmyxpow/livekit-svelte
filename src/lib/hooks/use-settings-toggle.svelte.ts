@@ -24,7 +24,7 @@ export function useSettingsToggle({ props }: UseSettingsToggleProps) {
 		onclick: () => {
 			if (dispatch) dispatch({ msg: 'toggle_settings' });
 		},
-		'aria-pressed': 'false'
+		'aria-pressed': false
 	});
 
 	return { mergedProps };

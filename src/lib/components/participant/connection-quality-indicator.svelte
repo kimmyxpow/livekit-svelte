@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Participant } from 'livekit-client';
 	import { ConnectionQuality } from 'livekit-client';
-	import { useConnectionQuality } from '../hooks/use-connection-quality.svelte.js';
+	import { useConnectionQuality } from '../../hooks/use-connection-quality.svelte.js';
 
 	interface Props {
 		participant?: Participant;

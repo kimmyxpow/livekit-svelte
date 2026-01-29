@@ -223,8 +223,8 @@ export function useSession(
 		};
 	});
 
-	const localParticipantMedia = useLocalParticipant(room);
-	const localParticipant = localParticipantMedia.participant;
+	const localParticipantMedia = useLocalParticipant({ room });
+	const localParticipant = localParticipantMedia.localParticipant;
 	const cameraPublication = localParticipantMedia.cameraTrack;
 	const localCamera = $derived(
 		cameraPublication
