@@ -4,12 +4,15 @@
 	import TrackLoop from '../track-loop.svelte';
 	import { useElementSize } from '../../hooks/internal/resize-observer.svelte.js';
 
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		trackReferences: TrackReferenceOrPlaceholder[];
 		class?: string;
+		children?: Snippet<[TrackReferenceOrPlaceholder]>;
 	}
 
-	let { trackReferences, class: className = '' }: Props = $props();
+	let { trackReferences, class: className = '', children: _children }: Props = $props();
 
 	let containerElement: HTMLDivElement | undefined = $state(undefined);
 	const size = useElementSize(() => containerElement);
@@ -33,7 +36,7 @@
 >
 	<TrackLoop {trackReferences}>
 		{#snippet children(trackRef)}
-			{@render children?.(trackRef)}
+			{@render _children?.(trackRef)}
 		{/snippet}
 	</TrackLoop>
 </div>

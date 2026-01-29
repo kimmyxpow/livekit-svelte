@@ -22,10 +22,6 @@
 
 {#if isActuallyMuted}
 	<span class={className}>
-		{#if children}
-			{@render children()}
-		{:else}
-			Muted
-		{/if}
+		{@render children?.()}
 	</span>
 {/if}

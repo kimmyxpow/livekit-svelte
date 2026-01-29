@@ -40,11 +40,7 @@
 
 {#if needsPermission}
 	<button class="lk-start-media-button {className}" onclick={startMedia}>
-		{#if children}
-			{@render children()}
-		{:else}
-			Allow Media
-		{/if}
+		{@render children?.()}
 	</button>
 {/if}
 
