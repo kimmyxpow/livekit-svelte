@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import type { LocalAudioTrack, LocalVideoTrack } from 'livekit-client';
 	import MediaDeviceSelect from '../components/controls/media-device-select.svelte';
 
@@ -9,6 +10,7 @@
 		tracks?: Partial<Record<MediaDeviceKind, LocalAudioTrack | LocalVideoTrack | undefined>>;
 		requestPermissions?: boolean;
 		class?: string;
+		children?: Snippet;
 	}
 
 	let {
@@ -17,17 +19,15 @@
 		onActiveDeviceChange: _onActiveDeviceChange,
 		tracks: _tracks,
 		requestPermissions = false,
-		class: className = ''
+		class: className = '',
+		children
 	}: Props = $props();
 
 	let isOpen = $state(false);
-	let needPermissions = $state(requestPermissions);
+	const needPermissions = $derived(isOpen || requestPermissions);
 
 	function toggleMenu() {
 		isOpen = !isOpen;
-		if (isOpen) {
-			needPermissions = true;
-		}
 	}
 
 	function handleClickOutside(event: MouseEvent) {
@@ -52,7 +52,7 @@
 	aria-pressed={isOpen}
 	onclick={toggleMenu}
 >
-	<slot>Media Devices</slot>
+	{@render children?.()}
 </button>
 
 {#if isOpen}

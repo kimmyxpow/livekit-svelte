@@ -15,9 +15,12 @@ export interface UseChatReturn {
 	send: (message: string) => Promise<ReceivedChatMessage>;
 }
 
-export function useChat(options?: ChatOptions & { room?: Room }): UseChatReturn {
-	const r = $derived(ensureRoom(options?.room));
-	const { messageObservable, isSendingObservable, send } = $derived(setupChat(r, options));
+export function useChat(
+	options?: (ChatOptions & { room?: Room }) | (() => ChatOptions & { room?: Room })
+): UseChatReturn {
+	const resolvedOptions = $derived(typeof options === 'function' ? options() : options);
+	const r = $derived(ensureRoom(resolvedOptions?.room));
+	const { messageObservable, isSendingObservable, send } = $derived(setupChat(r, resolvedOptions));
 
 	const chatMessages = useObservableState(messageObservable, []);
 	const isSending = useObservableState(isSendingObservable, false);

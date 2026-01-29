@@ -10,8 +10,10 @@
 
 	let { session, children }: Props = $props();
 
-	const sessionContext = createSessionContext(session);
-	setSessionContext(sessionContext);
+	$effect(() => {
+		const sessionContext = createSessionContext(session);
+		setSessionContext(sessionContext);
+	});
 </script>
 
 {@render children?.()}

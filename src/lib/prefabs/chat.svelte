@@ -23,11 +23,11 @@
 		children
 	}: Props = $props();
 
-	const { chatMessages, send, isSending } = useChat({
+	const { chatMessages, send, isSending } = useChat(() => ({
 		messageDecoder,
 		messageEncoder,
 		channelTopic
-	});
+	}));
 
 	const layoutContext = useMaybeLayoutContext();
 	let lastReadMsgAt = $state<ChatMessage['timestamp']>(0);

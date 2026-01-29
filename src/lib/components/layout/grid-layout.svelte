@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { TrackReferenceOrPlaceholder } from '@livekit/components-core';
-	import type { Snippet } from 'svelte';
 	import { useGridLayout } from '../../hooks/use-grid-layout.svelte.js';
 	import TrackLoop from '../track-loop.svelte';
 	import { useElementSize } from '../../hooks/internal/resize-observer.svelte.js';
@@ -8,10 +7,9 @@
 	interface Props {
 		trackReferences: TrackReferenceOrPlaceholder[];
 		class?: string;
-		children?: Snippet<[trackRef: TrackReferenceOrPlaceholder]>;
 	}
 
-	let { trackReferences, class: className = '', children: _children }: Props = $props();
+	let { trackReferences, class: className = '' }: Props = $props();
 
 	let containerElement: HTMLDivElement | undefined = $state(undefined);
 	const size = useElementSize(() => containerElement);

@@ -13,7 +13,7 @@
 	let { kind, class: className = '', requestPermissions = true, room }: Props = $props();
 
 	const { devices, activeDeviceId } = useMediaDeviceSelect(
-		{ kind, requestPermissions },
+		() => ({ kind, requestPermissions }),
 		() => room
 	);
 

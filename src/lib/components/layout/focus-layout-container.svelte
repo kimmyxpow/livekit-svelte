@@ -13,7 +13,7 @@
 
 	let { pinnedTrack, class: className = '', children }: Props = $props();
 
-	const pinState = writable<PinState>(pinnedTrack ? [pinnedTrack] : []);
+	const pinState = writable<PinState>([]);
 	setPinContext({ pinState });
 
 	$effect(() => {

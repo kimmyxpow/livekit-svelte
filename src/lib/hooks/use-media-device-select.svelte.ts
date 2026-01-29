@@ -14,15 +14,16 @@ export interface MediaDeviceSelectState {
 }
 
 export function useMediaDeviceSelect(
-	options: UseMediaDeviceSelectOptions,
+	options: UseMediaDeviceSelectOptions | (() => UseMediaDeviceSelectOptions),
 	room?: Room | (() => Room | undefined)
 ): MediaDeviceSelectState {
 	const r = $derived(ensureRoom(typeof room === 'function' ? room() : room));
+	const opts = $derived(typeof options === 'function' ? options() : options);
 
 	const devicesObservable = $derived(
-		createMediaDeviceObserver(options.kind, undefined, options.requestPermissions)
+		createMediaDeviceObserver(opts.kind, undefined, opts.requestPermissions)
 	);
-	const activeDeviceObservable = $derived(createActiveDeviceObservable(r, options.kind));
+	const activeDeviceObservable = $derived(createActiveDeviceObservable(r, opts.kind));
 
 	const devices = useObservableState(devicesObservable, []);
 	const activeDeviceId = useObservableState(activeDeviceObservable, '');

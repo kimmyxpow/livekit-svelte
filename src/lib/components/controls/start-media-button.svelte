@@ -16,10 +16,14 @@
 
 	let { room, class: className = '', children }: Props = $props();
 
-	const audioObservable = $derived(roomAudioPlaybackAllowedObservable(ensureRoom(room)));
-	const videoObservable = $derived(roomVideoPlaybackAllowedObservable(ensureRoom(room)));
-	const { canPlayAudio } = useObservableState(audioObservable, { canPlayAudio: true });
-	const { canPlayVideo } = useObservableState(videoObservable, { canPlayVideo: true });
+	const { canPlayAudio } = useObservableState(
+		() => roomAudioPlaybackAllowedObservable(ensureRoom(room)),
+		{ canPlayAudio: true }
+	);
+	const { canPlayVideo } = useObservableState(
+		() => roomVideoPlaybackAllowedObservable(ensureRoom(room)),
+		{ canPlayVideo: true }
+	);
 
 	const needsPermission = $derived(!canPlayAudio || !canPlayVideo);
 

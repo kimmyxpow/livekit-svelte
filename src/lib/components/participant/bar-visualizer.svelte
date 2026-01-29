@@ -78,11 +78,14 @@
 
 	const targetTrack = $derived(trackRef ?? track ?? contextTrack);
 
-	const volumeBands = useMultibandTrackVolume(targetTrack, {
-		bands: barCount,
-		loPass: 100,
-		hiPass: 200
-	});
+	const volumeBands = useMultibandTrackVolume(
+		() => targetTrack,
+		() => ({
+			bands: barCount,
+			loPass: 100,
+			hiPass: 200
+		})
+	);
 
 	const minHeight = $derived(options?.minHeight ?? 20);
 	const maxHeight = $derived(options?.maxHeight ?? 100);

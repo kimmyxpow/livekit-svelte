@@ -3,7 +3,7 @@ import { mergeProps } from '../utils.js';
 
 /** @alpha */
 export interface UseSettingsToggleProps {
-	props: Record<string, unknown>;
+	props: Record<string, unknown> | (() => Record<string, unknown>);
 }
 
 /**
@@ -19,13 +19,17 @@ export function useSettingsToggle({ props }: UseSettingsToggleProps) {
 	const dispatch = widget?.dispatch;
 	const className = 'lk-button lk-settings-toggle';
 
-	const mergedProps = mergeProps(props as Record<string, unknown>, {
-		className,
-		onclick: () => {
-			if (dispatch) dispatch({ msg: 'toggle_settings' });
-		},
-		'aria-pressed': false
-	});
+	const resolvedProps = $derived(typeof props === 'function' ? props() : props);
+
+	const mergedProps = $derived(
+		mergeProps(resolvedProps as Record<string, unknown>, {
+			className,
+			onclick: () => {
+				if (dispatch) dispatch({ msg: 'toggle_settings' });
+			},
+			'aria-pressed': false
+		})
+	);
 
 	return { mergedProps };
 }

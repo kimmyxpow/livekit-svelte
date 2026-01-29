@@ -1,11 +1,10 @@
 node_modules
-reference-only
-@reference-only
+/.internal-agent
+/.ralphy
 settings.local.json
 
 # Output
 .output
-.ralphy
 .vercel
 .netlify
 .wrangler

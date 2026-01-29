@@ -1,15 +1,13 @@
 <script lang="ts">
 	import type { TrackReferenceOrPlaceholder } from '@livekit/components-core';
-	import type { Snippet } from 'svelte';
 	import TrackLoop from '../track-loop.svelte';
 
 	interface Props {
 		trackReferences: TrackReferenceOrPlaceholder[];
 		class?: string;
-		children?: Snippet<[trackRef: TrackReferenceOrPlaceholder]>;
 	}
 
-	let { trackReferences, class: className = '', children: _children }: Props = $props();
+	let { trackReferences, class: className = '' }: Props = $props();
 </script>
 
 <div class="lk-carousel-layout {className}">

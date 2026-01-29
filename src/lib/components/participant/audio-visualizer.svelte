@@ -11,7 +11,7 @@
 	let { trackRef, class: className = '' }: Props = $props();
 
 	const trackReference = $derived(useEnsureTrackRef(trackRef));
-	const volumes = useMultibandTrackVolume(trackReference, { bands: 7, loPass: 300 });
+	const volumes = useMultibandTrackVolume(() => trackReference, { bands: 7, loPass: 300 });
 
 	const svgWidth = 200;
 	const svgHeight = 90;

@@ -11,12 +11,19 @@ import {
  * Hook for tracking the volume of an audio track using the Web Audio API.
  */
 export function useTrackVolume(
-	trackOrTrackReference?: LocalAudioTrack | RemoteAudioTrack | TrackReference,
+	trackOrTrackReference?:
+		| LocalAudioTrack
+		| RemoteAudioTrack
+		| TrackReference
+		| (() => LocalAudioTrack | RemoteAudioTrack | TrackReference | undefined),
 	options: AudioAnalyserOptions = { fftSize: 32, smoothingTimeConstant: 0 }
 ): number {
-	const track = isTrackReference(trackOrTrackReference)
-		? (trackOrTrackReference.publication?.track as LocalAudioTrack | RemoteAudioTrack | undefined)
-		: trackOrTrackReference;
+	const trackRef = $derived(
+		typeof trackOrTrackReference === 'function' ? trackOrTrackReference() : trackOrTrackReference
+	);
+	const track = isTrackReference(trackRef)
+		? (trackRef.publication?.track as LocalAudioTrack | RemoteAudioTrack | undefined)
+		: trackRef;
 
 	let volume = $state(0);
 
@@ -106,17 +113,22 @@ const multibandDefaults = {
  * @alpha
  */
 export function useMultibandTrackVolume(
-	trackOrTrackReference?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder,
-	options: MultiBandTrackVolumeOptions = {}
+	trackOrTrackReference?:
+		| LocalAudioTrack
+		| RemoteAudioTrack
+		| TrackReferenceOrPlaceholder
+		| (() => LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder | undefined),
+	options: MultiBandTrackVolumeOptions | (() => MultiBandTrackVolumeOptions) = {}
 ): number[] {
+	const trackRef = $derived(
+		typeof trackOrTrackReference === 'function' ? trackOrTrackReference() : trackOrTrackReference
+	);
 	const track =
-		trackOrTrackReference instanceof Track
-			? trackOrTrackReference
-			: (trackOrTrackReference?.publication?.track as
-					| LocalAudioTrack
-					| RemoteAudioTrack
-					| undefined);
-	const opts = { ...multibandDefaults, ...options };
+		trackRef instanceof Track
+			? trackRef
+			: (trackRef?.publication?.track as LocalAudioTrack | RemoteAudioTrack | undefined);
+	const resolvedOptions = $derived(typeof options === 'function' ? options() : options);
+	const opts = $derived({ ...multibandDefaults, ...resolvedOptions });
 
 	let frequencyBands = $state<number[]>(new Array(opts.bands).fill(0));
 

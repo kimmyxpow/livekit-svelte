@@ -9,7 +9,7 @@
 
 	let { class: className = '', children }: Props = $props();
 
-	const { mergedProps } = useSettingsToggle({ props: { class: className } });
+	const { mergedProps } = useSettingsToggle({ props: () => ({ class: className }) });
 </script>
 
 <button

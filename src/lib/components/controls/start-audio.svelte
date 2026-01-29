@@ -13,8 +13,10 @@
 
 	let { room, class: className = '', children }: Props = $props();
 
-	const observable = $derived(roomAudioPlaybackAllowedObservable(ensureRoom(room)));
-	const { canPlayAudio } = useObservableState(observable, { canPlayAudio: true });
+	const { canPlayAudio } = useObservableState(
+		() => roomAudioPlaybackAllowedObservable(ensureRoom(room)),
+		{ canPlayAudio: true }
+	);
 
 	async function startAudio() {
 		const r = ensureRoom(room);
