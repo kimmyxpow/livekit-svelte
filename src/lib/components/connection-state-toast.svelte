@@ -9,40 +9,32 @@
 
 <script lang="ts">
 	import { useConnectionState } from '../hooks/use-connection-state.svelte.js';
+	import { SpinnerIcon } from '../assets/icons/index.js';
 	import Toast from './toast.svelte';
 
 	let { room: roomProp, class: className = '' }: ConnectionStateToastProps = $props();
 
 	const connectionState = useConnectionState(() => roomProp);
 
-	let showToast = $state(false);
-	let lastState = $state(connectionState);
-
-	$effect(() => {
-		if (connectionState !== lastState) {
-			if (connectionState === 'reconnecting' || connectionState === 'disconnected') {
-				showToast = true;
-			}
-			lastState = connectionState;
-		}
-	});
-
-	const toastMessage = $derived.by(() => {
+	const notification = $derived.by(() => {
 		switch (connectionState) {
-			case 'connecting':
-				return 'Connecting...';
-			case 'connected':
-				return 'Connected';
 			case 'reconnecting':
-				return 'Reconnecting...';
+				return { show: true, content: 'Reconnecting' };
+			case 'connecting':
+				return { show: true, content: 'Connecting' };
 			case 'disconnected':
-				return 'Disconnected';
+				return { show: true, content: 'Disconnected' };
 			default:
-				return '';
+				return { show: false, content: '' };
 		}
 	});
 </script>
 
-<Toast show={showToast} onClose={() => (showToast = false)} class={className}>
-	{toastMessage}
-</Toast>
+{#if notification.show}
+	<Toast show={true} onClose={() => {}} class="lk-toast-connection-state {className}">
+		{#if notification.content === 'Reconnecting' || notification.content === 'Connecting'}
+			<SpinnerIcon className="lk-spinner" />
+		{/if}
+		{notification.content}
+	</Toast>
+{/if}

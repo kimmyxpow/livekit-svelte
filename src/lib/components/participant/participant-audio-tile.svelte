@@ -30,7 +30,7 @@
 		<div class="lk-participant-name-row">
 			<ParticipantName participant={p} />
 		</div>
-		<ConnectionQualityIndicator participant={p} />
+		<ConnectionQualityIndicator />
 	</div>
 
 	{#if children}

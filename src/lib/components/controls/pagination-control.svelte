@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Chevron from '../../assets/icons/Chevron.svelte';
 
 	interface Props {
 		currentPage: number;
@@ -30,9 +31,13 @@
 	{#if children}
 		{@render children(currentPage, totalPages, nextPage, prevPage)}
 	{:else}
-		<button onclick={prevPage} disabled={currentPage === 0}>Previous</button>
-		<span>{currentPage + 1} / {totalPages}</span>
-		<button onclick={nextPage} disabled={currentPage === totalPages - 1}>Next</button>
+		<button class="lk-button" onclick={prevPage} disabled={currentPage === 0}>
+			<Chevron />
+		</button>
+		<span class="lk-pagination-count">{currentPage} of {totalPages}</span>
+		<button class="lk-button" onclick={nextPage} disabled={currentPage === totalPages - 1}>
+			<Chevron />
+		</button>
 	{/if}
 </div>
 

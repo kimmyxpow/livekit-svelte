@@ -3,6 +3,7 @@
 	import type { Snippet } from 'svelte';
 	import { ensureTrackRef } from '../../context/track-ref-context.svelte.js';
 	import { ensureLayoutContext } from '../../context/layout-context.svelte.js';
+	import { FocusToggleIcon, UnfocusToggleIcon } from '../../assets/icons/index.js';
 
 	interface Props {
 		trackRef?: TrackReferenceOrPlaceholder;
@@ -51,8 +52,10 @@
 >
 	{#if children}
 		{@render children(isPinned)}
+	{:else if isPinned}
+		<UnfocusToggleIcon />
 	{:else}
-		{isPinned ? 'Unpin' : 'Pin'}
+		<FocusToggleIcon />
 	{/if}
 </button>
 
