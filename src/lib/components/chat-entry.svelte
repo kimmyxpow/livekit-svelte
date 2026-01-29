@@ -1,7 +1,19 @@
 <script lang="ts" module>
-	import { tokenize, createDefaultGrammar } from '@livekit/components-core';
+	import {
+		tokenize,
+		createDefaultGrammar,
+		type ReceivedChatMessage
+	} from '@livekit/components-core';
 
 	export type MessageFormatter = (message: string) => string;
+
+	export interface ChatEntryProps {
+		entry: ReceivedChatMessage;
+		hideName?: boolean;
+		hideTimestamp?: boolean;
+		messageFormatter?: MessageFormatter;
+		class?: string;
+	}
 
 	export function formatChatMessageLinks(message: string): string {
 		// For Svelte, we return HTML string that can be rendered with @html
@@ -25,23 +37,13 @@
 </script>
 
 <script lang="ts">
-	import type { ReceivedChatMessage } from '@livekit/components-core';
-
-	interface Props {
-		entry: ReceivedChatMessage;
-		hideName?: boolean;
-		hideTimestamp?: boolean;
-		messageFormatter?: MessageFormatter;
-		class?: string;
-	}
-
 	let {
 		entry,
 		hideName = false,
 		hideTimestamp = false,
 		messageFormatter,
 		class: className = ''
-	}: Props = $props();
+	}: ChatEntryProps = $props();
 
 	const formattedMessage = $derived(
 		messageFormatter ? messageFormatter(entry.message) : entry.message

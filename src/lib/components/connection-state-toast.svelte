@@ -1,14 +1,17 @@
-<script lang="ts">
+<script lang="ts" module>
 	import type { Room } from 'livekit-client';
-	import { useConnectionState } from '../hooks/use-connection-state.svelte.js';
-	import Toast from './toast.svelte';
 
-	interface Props {
+	export interface ConnectionStateToastProps {
 		room?: Room;
 		class?: string;
 	}
+</script>
 
-	let { room: roomProp, class: className = '' }: Props = $props();
+<script lang="ts">
+	import { useConnectionState } from '../hooks/use-connection-state.svelte.js';
+	import Toast from './toast.svelte';
+
+	let { room: roomProp, class: className = '' }: ConnectionStateToastProps = $props();
 
 	const connectionState = useConnectionState(() => roomProp);
 

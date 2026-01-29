@@ -10,6 +10,9 @@ export * from './hooks/index.js';
 // Context
 export * from './context/index.js';
 
+// Assets
+export * from './assets/index.js';
+
 // Utils
 export { isTrackReference, getTrackReferenceId, sortTrackReferences } from './utils.js';
 

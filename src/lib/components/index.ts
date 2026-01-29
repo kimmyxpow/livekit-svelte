@@ -1,12 +1,23 @@
 export { default as LiveKitRoom } from './live-kit-room.svelte';
 export { default as ParticipantLoop } from './participant-loop.svelte';
 export { default as TrackLoop } from './track-loop.svelte';
-export { default as RoomAudioRenderer } from './room-audio-renderer.svelte';
+export {
+	default as RoomAudioRenderer,
+	type RoomAudioRendererProps
+} from './room-audio-renderer.svelte';
 export { default as ConnectionState } from './connection-state.svelte';
-export { default as ConnectionStateToast } from './connection-state-toast.svelte';
+export {
+	default as ConnectionStateToast,
+	type ConnectionStateToastProps
+} from './connection-state-toast.svelte';
 export { default as RoomName } from './room-name.svelte';
 export { default as Toast } from './toast.svelte';
-export { default as ChatEntry } from './chat-entry.svelte';
+export {
+	default as ChatEntry,
+	type ChatEntryProps,
+	type MessageFormatter,
+	formatChatMessageLinks
+} from './chat-entry.svelte';
 export { default as SessionProvider } from './session-provider.svelte';
 
 export { default as TrackToggle } from './controls/track-toggle.svelte';
