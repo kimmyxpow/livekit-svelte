@@ -1,9 +1,4 @@
-import type {
-	LocalAudioTrack,
-	RemoteAudioTrack,
-	AudioAnalyserOptions,
-	AnalyserOptions
-} from 'livekit-client';
+import type { LocalAudioTrack, RemoteAudioTrack, AudioAnalyserOptions } from 'livekit-client';
 import { Track, createAudioAnalyser } from 'livekit-client';
 import {
 	type TrackReference,
@@ -95,7 +90,7 @@ export interface MultiBandTrackVolumeOptions {
 	 * update should run every x ms
 	 */
 	updateInterval?: number;
-	analyserOptions?: AnalyserOptions;
+	analyserOptions?: AudioAnalyserOptions;
 }
 
 const multibandDefaults = {

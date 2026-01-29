@@ -9,8 +9,5 @@ export function useTrackSyncTime(ref: TrackReferenceOrPlaceholder | undefined) {
 	const observable = ref?.publication?.track
 		? trackSyncTimeObserver(ref.publication.track)
 		: undefined;
-	return useObservableState(observable, {
-		timestamp: Date.now(),
-		rtpTimestamp: ref?.publication?.track?.rtpTimestamp
-	});
+	return useObservableState(observable, Date.now());
 }

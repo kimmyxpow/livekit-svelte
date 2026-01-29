@@ -24,5 +24,5 @@ export function useParticipantPermissions(
 	const p = ensureParticipant(options.participant);
 	const permissionObserver = participantPermissionObserver(p);
 	const permissions = useObservableState(permissionObserver, p.permissions);
-	return permissions;
+	return permissions as ParticipantPermission | undefined;
 }

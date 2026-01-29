@@ -25,7 +25,7 @@ export function useDisconnectButton(props: DisconnectButtonProps) {
 
 	const { className, disconnect } = setupDisconnectButton(room);
 
-	const buttonProps = mergeProps(props, {
+	const buttonProps = mergeProps(props as Record<string, unknown>, {
 		className,
 		onclick: () => disconnect(props.stopTracks ?? true),
 		disabled: connectionState === ConnectionState.Disconnected

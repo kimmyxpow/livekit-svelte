@@ -11,7 +11,7 @@
 
 	const layoutContext = createLayoutContext();
 	setLayoutContext(layoutContext);
-	setPinContext({ pinState: layoutContext.pin });
+	setPinContext({ pinState: layoutContext.pin.state! });
 </script>
 
 {@render children?.()}

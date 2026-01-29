@@ -14,7 +14,10 @@ import { getRoomContext } from '../context/room-context.svelte.js';
  */
 export function useLocalParticipantPermissions(): ParticipantPermission | undefined {
 	const room = getRoomContext();
+	if (!room) {
+		return undefined;
+	}
 	const permissionObserver = participantPermissionObserver(room.localParticipant);
 	const permissions = useObservableState(permissionObserver, room.localParticipant.permissions);
-	return permissions;
+	return permissions as ParticipantPermission | undefined;
 }

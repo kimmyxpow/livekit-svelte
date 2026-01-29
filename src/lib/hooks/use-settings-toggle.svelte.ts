@@ -14,15 +14,17 @@ export interface UseSettingsToggleProps {
  * @alpha
  */
 export function useSettingsToggle({ props }: UseSettingsToggleProps) {
-	const { dispatch, state } = getLayoutContext().widget;
+	const layoutContext = getLayoutContext();
+	const widget = layoutContext?.widget;
+	const dispatch = widget?.dispatch;
 	const className = 'lk-button lk-settings-toggle';
 
-	const mergedProps = mergeProps(props, {
+	const mergedProps = mergeProps(props as Record<string, unknown>, {
 		className,
 		onclick: () => {
 			if (dispatch) dispatch({ msg: 'toggle_settings' });
 		},
-		'aria-pressed': state?.showSettings ? 'true' : 'false'
+		'aria-pressed': 'false'
 	});
 
 	return { mergedProps };

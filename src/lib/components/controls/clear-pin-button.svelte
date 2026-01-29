@@ -12,7 +12,7 @@
 	const layout = ensureLayoutContext();
 
 	function clearPin() {
-		layout.pin.set([]);
+		layout.pin.state?.set([]);
 	}
 </script>
 

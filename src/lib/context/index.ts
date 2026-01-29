@@ -20,7 +20,9 @@ export {
 	setLayoutContext,
 	getLayoutContext,
 	ensureLayoutContext,
-	type LayoutContext
+	type LayoutContext,
+	type PinContextType,
+	type WidgetContextType
 } from './layout-context.svelte.js';
 
 export {
@@ -43,8 +45,7 @@ export {
 	setSessionContext,
 	getSessionContext,
 	ensureSessionContext,
-	type SessionContextValue,
-	type AgentState
+	type SessionContextValue
 } from './session-context.svelte.js';
 
 export {

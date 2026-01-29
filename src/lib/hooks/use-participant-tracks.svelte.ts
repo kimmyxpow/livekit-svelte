@@ -5,7 +5,7 @@ import type { Room, Track } from 'livekit-client';
 import { getParticipantContext } from '../context/participant-context.svelte.js';
 import { useParticipants } from './use-participants.svelte.js';
 
-type UseParticipantTracksOptions = {
+export type UseParticipantTracksOptions = {
 	participantIdentity?: string;
 	room?: Room;
 };

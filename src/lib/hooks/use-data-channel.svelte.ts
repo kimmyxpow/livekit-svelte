@@ -57,6 +57,14 @@ export function useDataChannel<T extends string>(
 	const topic = typeof topicOrCallback === 'string' ? topicOrCallback : undefined;
 	const room = getRoomContext();
 
+	if (!room) {
+		return {
+			message: undefined,
+			send: async () => {},
+			isSending: false
+		};
+	}
+
 	const { send, messageObservable, isSendingObservable } = setupDataMessageHandler(
 		room,
 		topic,

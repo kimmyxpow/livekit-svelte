@@ -1,5 +1,4 @@
-import type TypedEventEmitter from 'typed-emitter';
-import { SendTextOptions } from 'livekit-client';
+import type { SendTextOptions } from 'livekit-client';
 import { EventEmitter } from 'events';
 import type {
 	ReceivedMessage,
@@ -14,13 +13,23 @@ import { useChat } from './use-chat.svelte.js';
 import type { UseSessionReturn } from './use-session.svelte.js';
 import { ensureSessionContext } from '../context/session-context.svelte.js';
 
+// Simple event emitter interface
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyFunction = (...args: any[]) => void;
+
+interface TypedEmitter<T extends Record<string, AnyFunction>> {
+	on<K extends keyof T>(event: K, listener: T[K]): this;
+	off<K extends keyof T>(event: K, listener: T[K]): this;
+	emit<K extends keyof T>(event: K, ...args: Parameters<T[K]>): boolean;
+}
+
 /** @beta */
 export type UseSessionMessagesReturn = {
 	messages: Array<ReceivedMessage>;
 	isSending: boolean;
 	send: (message: string, options?: SendTextOptions) => Promise<ReceivedChatMessage>;
 	internal: {
-		emitter: TypedEventEmitter<MessagesCallbacks>;
+		emitter: TypedEmitter<MessagesCallbacks>;
 	};
 };
 
@@ -38,12 +47,12 @@ export type MessagesCallbacks = {
 export function useSessionMessages(session?: UseSessionReturn): UseSessionMessagesReturn {
 	const { room } = session ? { room: session.room } : ensureSessionContext();
 
-	const emitter = new EventEmitter() as TypedEventEmitter<MessagesCallbacks>;
+	const emitter = new EventEmitter() as TypedEmitter<MessagesCallbacks>;
 
 	const agent = useAgent(session);
 
 	const transcriptions: Array<TextStreamData> = useTranscriptions({ room });
-	const chat = useChat({ room });
+	const chat = useChat(() => room);
 
 	const transcriptionMessages: Array<
 		ReceivedUserTranscriptionMessage | ReceivedAgentTranscriptionMessage
@@ -86,7 +95,7 @@ export function useSessionMessages(session?: UseSessionReturn): UseSessionMessag
 		})
 	);
 
-	const receivedMessages = $derived([...transcriptionMessages, ...chat.chatMessages]);
+	const receivedMessages = $derived([...transcriptionMessages, ...chat.messages]);
 
 	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const messageFirstReceivedTimeMap = new Map<ReceivedMessage['id'], Date>();

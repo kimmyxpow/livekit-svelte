@@ -26,9 +26,16 @@ export function useFocusToggle({ trackRef, props }: UseFocusToggleProps) {
 
 	const { className } = setupFocusToggle();
 
-	const inFocus = isTrackReferencePinned(trackReference, layoutContext?.pin.state);
+	// Get the current pin state value from the store using $state rune
+	const pinStateStore = layoutContext?.pin.state;
+	let inFocus = $state(false);
+	if (pinStateStore) {
+		pinStateStore.subscribe((state) => {
+			inFocus = isTrackReferencePinned(trackReference, state);
+		})();
+	}
 
-	const mergedProps = mergeProps(props, {
+	const mergedProps = mergeProps(props as Record<string, unknown>, {
 		className,
 		onclick: (event: MouseEvent) => {
 			// Call user defined on click callbacks.

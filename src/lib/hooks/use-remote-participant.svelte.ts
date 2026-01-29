@@ -52,6 +52,10 @@ export function useRemoteParticipant(
 ): RemoteParticipant | undefined {
 	const room = getRoomContext();
 
+	if (!room) {
+		return undefined;
+	}
+
 	const observable =
 		typeof identityOrIdentifier === 'string'
 			? connectedParticipantObserver(room, identityOrIdentifier, {
@@ -74,7 +78,7 @@ export function useRemoteParticipant(
 					return true;
 				});
 
-	const participant = useObservableState(observable, initialValue);
+	const participant = useObservableState(observable, initialValue as RemoteParticipant | undefined);
 
-	return participant;
+	return participant as RemoteParticipant | undefined;
 }

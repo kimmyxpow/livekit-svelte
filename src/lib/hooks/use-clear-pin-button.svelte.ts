@@ -14,13 +14,14 @@ export interface ClearPinButtonProps {
  */
 export function useClearPinButton(props: ClearPinButtonProps) {
 	const layoutContext = getLayoutContext();
-	const { state, dispatch } = layoutContext.pin;
+	const pinState = layoutContext?.pin.state;
+	const dispatch = layoutContext?.pin.dispatch;
 
 	const { className } = setupClearPinButton();
 
-	const buttonProps = mergeProps(props, {
+	const buttonProps = mergeProps(props as Record<string, unknown>, {
 		className,
-		disabled: !state?.length,
+		disabled: !pinState,
 		onclick: () => {
 			if (dispatch) dispatch({ msg: 'clear_pin' });
 		}

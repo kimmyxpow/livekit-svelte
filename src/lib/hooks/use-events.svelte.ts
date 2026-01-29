@@ -1,16 +1,16 @@
-import type TypedEventEmitter from 'typed-emitter';
-import type { EventMap } from 'typed-emitter';
+// Simple event emitter interface matching typed-emitter
+interface EventEmitter<T extends Record<string, unknown>> {
+	on<K extends keyof T>(event: K, listener: T[K]): this;
+	off<K extends keyof T>(event: K, listener: T[K]): this;
+}
+
+type EventMap = Record<string, unknown>;
 
 /** @public */
-export function useEvents<
-	Emitter extends TypedEventEmitter<EventMap>,
-	EmitterEventMap extends Emitter extends TypedEventEmitter<infer EM> ? EM : never,
-	Event extends Parameters<Emitter['on']>[0],
-	Callback extends EmitterEventMap[Event]
->(
-	instance: Emitter | { internal: { emitter: Emitter } } | null | undefined,
-	event: Event,
-	handlerFn: Callback | undefined
+export function useEvents<EM extends EventMap, E extends EventEmitter<EM>, K extends keyof EM>(
+	instance: E | { internal: { emitter: E } } | null | undefined,
+	event: K,
+	handlerFn: EM[K] | undefined
 ) {
 	const emitter = !instance ? null : 'internal' in instance ? instance.internal.emitter : instance;
 

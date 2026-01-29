@@ -23,7 +23,8 @@ export function useParticipantAttributes(props: UseParticipantAttributesOptions 
 	const p = props.participant ?? participantContext ?? undefined;
 	const attributeObserver = p ? participantAttributesObserver(p) : undefined;
 	const attributeState = useObservableState(attributeObserver, {
-		attributes: p?.attributes ?? {}
+		attributes: p?.attributes ?? {},
+		changed: {}
 	});
 
 	return attributeState;

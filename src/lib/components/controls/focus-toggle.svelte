@@ -18,7 +18,7 @@
 
 	$effect(() => {
 		const tr = ensureTrackRef(trackRef);
-		const unsubscribe = layout.pin.subscribe((state) => {
+		const unsubscribe = layout.pin.state?.subscribe((state) => {
 			isPinned = state.some(
 				(p) => p.participant.identity === tr.participant.identity && p.source === tr.source
 			);
@@ -28,7 +28,7 @@
 
 	function toggle() {
 		const tr = ensureTrackRef(trackRef);
-		layout.pin.update((state) => {
+		layout.pin.state?.update((state) => {
 			const exists = state.some(
 				(p) => p.participant.identity === tr.participant.identity && p.source === tr.source
 			);

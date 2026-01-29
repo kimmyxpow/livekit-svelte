@@ -89,13 +89,15 @@ export function cloneSingleChild(
 	key?: unknown
 ): unknown {
 	if (children && typeof children === 'object' && 'props' in children) {
-		const child = children as { props: { className?: string; style?: Record<string, unknown> } };
+		const child = children as {
+			props: Record<string, unknown> & { className?: string; style?: Record<string, unknown> };
+		};
+		const mergedProps: Record<string, unknown> = { ...props };
 		if (child.props.className) {
-			props ??= {};
-			props.className = clsx(child.props.className, props.className);
-			props.style = { ...child.props.style, ...props.style };
+			mergedProps.className = clsx(child.props.className, props?.className as string | undefined);
+			mergedProps.style = { ...child.props.style, ...(props?.style as Record<string, unknown>) };
 		}
-		return { ...child, ...props, key };
+		return { ...child, ...mergedProps, key };
 	}
 	return children;
 }

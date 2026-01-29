@@ -13,12 +13,12 @@
 
 	let showChat = $state(false);
 
-	layout.widget.subscribe((state) => {
+	layout.widget.state?.subscribe((state) => {
 		showChat = state.showChat;
 	});
 
 	function toggle() {
-		layout.widget.update((state) => ({
+		layout.widget.state?.update((state) => ({
 			...state,
 			showChat: !state.showChat
 		}));

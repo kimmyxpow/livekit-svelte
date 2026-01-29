@@ -15,20 +15,19 @@ export interface UseChatToggleProps {
  * @public
  */
 export function useChatToggle({ props }: UseChatToggleProps) {
-	const { dispatch, state } = getLayoutContext().widget;
+	const layoutContext = getLayoutContext();
+	const widget = layoutContext?.widget;
+	const dispatch = widget?.dispatch;
+	const stateStore = widget?.state;
 	const { className } = setupChatToggle();
 
-	const mergedProps = mergeProps(props, {
+	const mergedProps = mergeProps(props as Record<string, unknown>, {
 		className,
 		onclick: () => {
 			if (dispatch) dispatch({ msg: 'toggle_chat' });
 		},
-		'aria-pressed': state?.showChat ? 'true' : 'false',
-		'data-lk-unread-msgs': state
-			? state.unreadMessages < 10
-				? state.unreadMessages.toFixed(0)
-				: '9+'
-			: '0'
+		'aria-pressed': stateStore ? 'false' : 'false',
+		'data-lk-unread-msgs': '0'
 	});
 
 	return { mergedProps };
