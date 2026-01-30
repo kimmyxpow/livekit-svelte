@@ -152,6 +152,7 @@ export {
 	type UseMediaTrackBySourceOrNameOptions,
 	type UseMediaTrackBySourceOrNameReturn
 } from './use-media-track-by-source-or-name.svelte.js';
+export { useBarAnimator } from './use-bar-animator.svelte.js';
 
 // Cloud/Krisp exports
 export {

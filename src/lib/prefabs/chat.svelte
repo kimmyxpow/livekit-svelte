@@ -8,6 +8,7 @@
 
 	interface Props extends ChatOptions {
 		class?: string;
+		style?: string;
 		messageFormatter?: (message: string) => string;
 		children?: Snippet<
 			[{ entry: ReceivedChatMessage; messageFormatter?: (message: string) => string }]
@@ -16,6 +17,7 @@
 
 	let {
 		class: className = '',
+		style = '',
 		messageFormatter,
 		messageDecoder,
 		messageEncoder,
@@ -91,7 +93,7 @@
 	}
 </script>
 
-<div class="lk-chat {className}">
+<div class="lk-chat {className}" {style}>
 	<div class="lk-chat-header">
 		Messages
 		{#if layoutContext}
